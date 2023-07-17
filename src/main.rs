@@ -1,5 +1,6 @@
 fn main() {
     println!("Hello, world!");
+    println!("{}", return_an_int(10));
 }
 
 fn return_an_int(a: i32) -> i32 {

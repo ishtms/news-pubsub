@@ -1,17 +1,27 @@
-fn main() {
-    println!("Hello, world!");
-    println!("{}", return_an_int(10));
+use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+
+#[get("/")]
+async fn hello() -> impl Responder {
+    HttpResponse::Ok().body("Hello world!")
 }
 
-fn return_an_int(a: i32) -> i32 {
-    a + 10
+#[post("/echo")]
+async fn echo(req_body: String) -> impl Responder {
+    HttpResponse::Ok().body(req_body)
 }
 
-#[cfg(test)]
-mod tests {
-    use super::*;
-    #[test]
-    fn return_an_int_t() {
-        assert_eq!(20, return_an_int(10));
-    }
+async fn manual_hello() -> impl Responder {
+    HttpResponse::Ok().body("Hey there!")
+}
+#[actix_web::main]
+async fn main() -> std::io::Result<()> {
+    HttpServer::new(|| {
+        App::new()
+            .service(hello)
+            .service(echo)
+            .route("/hey", web::get().to(manual_hello))
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
 }

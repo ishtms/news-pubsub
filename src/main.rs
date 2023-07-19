@@ -1,9 +1,15 @@
+use news_pubsub::configuration::get_configuration;
+use news_pubsub::startup::run;
 use std::net::TcpListener;
-
-use news_pubsub::run;
 
 #[tokio::main]
 async fn main() -> Result<(), std::io::Error> {
-    let listener = TcpListener::bind("127.0.0.1:8000")?;
-    run(listener)?.await
+    let config = get_configuration().expect("Failed to get the configuration");
+    let listener = TcpListener::bind(format!("127.0.0.1:{}", config.application_port))
+        .expect("Failed to bind listener");
+
+    let app = run(listener).expect("Error creating a new HttpServer");
+    app.await?;
+
+    Ok(())
 }

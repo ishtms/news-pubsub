@@ -1,4 +1,5 @@
-name: Rust
+
+name: Deployment
 
 on:
   push:

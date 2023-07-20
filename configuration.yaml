@@ -2,6 +2,6 @@ application_port: 6969
 database:
   host: "127.0.0.1"
   port: 5432
-  username: "postgres"
-  password: "password"
+  username: "ishtmeet"
+  password: ""
   database_name: "newsletter"

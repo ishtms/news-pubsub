@@ -1,0 +1,14 @@
+2023-07-21T22:19:49.744794Z  INFO actix_server::builder:200: starting 10 workers
+2023-07-21T22:19:49.744827Z  INFO actix_server::server:197: Tokio runtime found; starting in existing Tokio runtime
+2023-07-21T22:26:43.872595Z  INFO actix_server::server:319: SIGINT received; starting forced shutdown
+2023-07-21T22:26:43.872691Z  INFO actix_server::accept:143: accept thread stopped
+2023-07-21T22:26:43.872909Z  INFO actix_server::worker:591: shutting down idle worker
+2023-07-21T22:26:43.873018Z  INFO actix_server::worker:591: shutting down idle worker
+2023-07-21T22:26:43.873059Z  INFO actix_server::worker:591: shutting down idle worker
+2023-07-21T22:26:43.873087Z  INFO actix_server::worker:591: shutting down idle worker
+2023-07-21T22:26:43.873143Z  INFO actix_server::worker:591: shutting down idle worker
+2023-07-21T22:26:43.873153Z  INFO actix_server::worker:591: shutting down idle worker
+2023-07-21T22:26:43.873192Z  INFO actix_server::worker:591: shutting down idle worker
+2023-07-21T22:26:43.873224Z  INFO actix_server::worker:591: shutting down idle worker
+2023-07-21T22:26:43.873241Z  INFO actix_server::worker:591: shutting down idle worker
+2023-07-21T22:26:43.873304Z  INFO actix_server::worker:591: shutting down idle worker

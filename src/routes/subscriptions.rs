@@ -10,7 +10,7 @@ pub struct FormData {
     name: String,
 }
 
-#[tracing::instrument(name = "Subscribe to newsletter", skip(db_connection))]
+#[tracing::instrument(name = "Subscribe to newsletter", skip(db_connection), fields(span_id = nanoid::nanoid!()))]
 pub async fn subscribe(
     form: web::Form<FormData>,
     db_connection: web::Data<PgPool>,
@@ -43,7 +43,7 @@ pub async fn subscribe(
         );
         HttpResponse::InternalServerError().finish()
     } else {
-        event!(Level::INFO, "New subscriber details have been saved");
+        event!(Level::INFO, "Subscriber saved");
         HttpResponse::Ok().finish()
     }
 }

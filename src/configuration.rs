@@ -25,6 +25,35 @@ pub struct DatabaseSettings {
     pub port: u16,
 }
 
+pub enum Environment {
+    Development,
+    Production,
+}
+
+impl Environment {
+    pub fn as_str(&self) -> &'static str {
+        match self {
+            Environment::Development => "dev",
+            Environment::Production => "prod",
+        }
+    }
+}
+
+impl TryFrom<String> for Environment {
+    type Error = String;
+    fn try_from(s: String) -> Result<Self, Self::Error> {
+        match s.to_lowercase().as_str() {
+            "local" | "dev" => Ok(Self::Development),
+            "prod" | "production" | "live" => Ok(Self::Production),
+            other => Err(format!(
+                "{} is not a supported environment. \
+                Use either `local` or `production`.",
+                other
+            )),
+        }
+    }
+}
+
 impl Settings {
     pub async fn create_connection_pool(&self) -> Result<PgPool, std::io::Error> {
         Ok(PgPoolOptions::new()
@@ -57,35 +86,6 @@ impl DatabaseSettings {
             self.host,
             self.port
         ))
-    }
-}
-
-pub enum Environment {
-    Development,
-    Production,
-}
-
-impl Environment {
-    pub fn as_str(&self) -> &'static str {
-        match self {
-            Environment::Development => "dev",
-            Environment::Production => "prod",
-        }
-    }
-}
-
-impl TryFrom<String> for Environment {
-    type Error = String;
-    fn try_from(s: String) -> Result<Self, Self::Error> {
-        match s.to_lowercase().as_str() {
-            "local" | "dev" => Ok(Self::Development),
-            "prod" | "production" | "live" => Ok(Self::Production),
-            other => Err(format!(
-                "{} is not a supported environment. \
-                Use either `local` or `production`.",
-                other
-            )),
-        }
     }
 }
 

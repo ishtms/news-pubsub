@@ -27,16 +27,17 @@ static TRACING: Lazy<WorkerGuard> = Lazy::new(|| {
 async fn spawn_app() -> TestApp {
     let _guard = Lazy::force(&TRACING);
 
-    let listener = TcpListener::bind("127.0.0.1:0").expect("Failed to bind random port");
+    let mut configuration = get_configuration().expect("Failed to read configuration.");
+    let listener = TcpListener::bind(&format!("{}:0", configuration.application.host))
+        .expect("Failed to bind random port");
+    configuration.database.database_name = nanoid::nanoid!();
+
     let port = listener
         .local_addr()
         .expect("Could not resolve port")
         .port();
 
-    let address: String = format!("http://127.0.0.1:{}", port);
-
-    let mut configuration = get_configuration().expect("Failed to read configuration.");
-    configuration.database.database_name = nanoid::nanoid!();
+    let address: String = format!("http://{}:{}", configuration.application.host, port);
 
     let connection_pool = configure_database(&configuration.database).await;
     let server = run(listener, connection_pool.clone()).expect("Failed to bind address");

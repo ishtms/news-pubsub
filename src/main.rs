@@ -17,8 +17,11 @@ async fn main() -> Result<(), std::io::Error> {
         .await
         .expect("failed to create connection.");
 
-    let listener = TcpListener::bind(format!("127.0.0.1:{}", configurator.application_port))
-        .expect("Failed to bind listener");
+    let listener = TcpListener::bind(format!(
+        "{}:{}",
+        configurator.application.host, configurator.application.port
+    ))
+    .expect("Failed to bind listener");
 
     let app = run(listener, db_pool).expect("Error creating a new HttpServer");
     app.await?;

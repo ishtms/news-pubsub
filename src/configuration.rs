@@ -31,7 +31,7 @@ impl Settings {
             .max_connections(50)
             .min_connections(30)
             .acquire_timeout(Duration::from_secs(2))
-            .connect(&self.database.connection_string().expose_secret())
+            .connect(self.database.connection_string().expose_secret())
             .await
             .expect("Failed to create a postgres connection."))
     }
@@ -101,9 +101,7 @@ pub fn get_configuration() -> Result<Settings, config::ConfigError> {
     let environment_filename: String = format!("{}.yaml", environment.as_str());
 
     let settings = config::Config::builder()
-        .add_source(config::File::from(config::File::from(
-            config_dir.join("base.yaml"),
-        )))
+        .add_source(config::File::from(config_dir.join("base.yaml")))
         .add_source(config::File::from(config_dir.join(environment_filename)))
         .build()?;
 

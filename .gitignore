@@ -1,6 +1,5 @@
 debug/
 target/
 
-Cargo.lock
 logs/
 **/*.rs.bk
